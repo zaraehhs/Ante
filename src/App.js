@@ -7,6 +7,8 @@ import ProTip from './components/ProTip';
 import Dashboard from './pages/Dashboard'
 import SignInSide from './pages/SignIn';
 import Demo from './pages/Demo';
+import UserProfile from './pages/UserProfile';
+import Inventory from './pages/Inventory';
 
 import {
   BrowserRouter as Router,
@@ -18,6 +20,8 @@ export default function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/userprofile" component={UserProfile} />
+        <Route path="/inventory" component={Inventory} />
         <Route path="/demo" component={Demo} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/" component={SignInSide} />
