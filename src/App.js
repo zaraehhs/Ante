@@ -7,6 +7,10 @@ import ProTip from './components/ProTip';
 import Dashboard from './pages/Dashboard'
 import SignInSide from './pages/SignIn';
 import Demo from './pages/Demo';
+import Landing from "./pages/Landing";
+import CollectInfo from "./pages/CollectInfo";
+import PrivateRoute from "./components/PrivateRoute";
+import UserProvider from "./firebase/auth-provider";
 
 import {
   BrowserRouter as Router,
@@ -17,11 +21,15 @@ import {
 export default function App() {
   return (
     <Router>
-      <Switch>
-        <Route path="/demo" component={Demo} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/" component={SignInSide} />
-      </Switch>
+      <UserProvider>
+        <Switch>
+          <Route path="/demo" component={Demo} exact />
+          <Route path="/signin" component={SignInSide} exact />
+          <PrivateRoute path="/dashboard" component={Dashboard} exact />
+          <PrivateRoute path="/collectinfo" component={CollectInfo} exact />
+          <Route path="/" component={Landing} />
+        </Switch>
+      </UserProvider>
     </Router>
   );
 }
