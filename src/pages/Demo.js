@@ -6,7 +6,7 @@ import { firestore } from "../firebase/firebase.utils";
 class Demo extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { textFieldValue: "", items: []};
+        this.state = { textFieldValue: "", items: [] };
 
         this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
         this.submit = this.submit.bind(this);
@@ -24,7 +24,7 @@ class Demo extends React.Component {
                     text: data
                 }
             });
-            this.setState({"items": list});
+            this.setState({ "items": list });
         });
     }
 
@@ -56,9 +56,9 @@ class Demo extends React.Component {
             {
                 this.state.items.map(({ text }) => (
                     <>
-                    <br></br>
-                    <span> {text} </span>
-                    <br></br>
+                        <br></br>
+                        <span> {text} </span>
+                        <br></br>
                     </>
                 ))
             }

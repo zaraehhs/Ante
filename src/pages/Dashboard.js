@@ -17,11 +17,13 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
 import Orders from '../components/Orders';
+import { AlternateEmail } from '@material-ui/icons';
+import { auth } from "../firebase/firebase.utils";
 
 function Copyright() {
   return (
@@ -128,6 +130,11 @@ export default function Dashboard() {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  const logout = () => {
+    auth.signOut();
+  }
+
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -146,9 +153,7 @@ export default function Dashboard() {
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
+            <ExitToAppIcon onClick={logout}/>
           </IconButton>
         </Toolbar>
       </AppBar>

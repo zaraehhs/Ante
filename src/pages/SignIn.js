@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +12,11 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import * as firebase from 'firebase/app';
+import { auth, googleAuth, getUID } from "../firebase/firebase.utils";
+import googleImage from '../images/google_sign_in.png';
+import logo from '../images/login.svg';
+import { useHistory } from 'react-router-dom';
+import { firestore } from "../firebase/firebase.utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,36 +49,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function googleSignIn() {
-    alert("here");
-    var provider = new firebase.auth.GoogleAuthProvider();
 
-    firebase.auth().signInWithRedirect(provider);
-
-    firebase.auth().getRedirectResult().then(function(result) {
-        if (result.credential) {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken;
-          // ...
-        }
-        // The signed-in user info.
-        var user = result.user;
-      }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
-      });
-}
-
-
-
-export default function SignInSide() {
+const SignInSide = () => {
   const classes = useStyles();
+  const history = useHistory();
+
+  async function createUser(uid) {
+    await firestore.collection("users").doc(uid).set({
+      admin: true,
+      last_login: new Date().getTime()
+    }, { merge: true });
+  }
+
+  const googleSignIn = () => {
+    auth.signInWithPopup(googleAuth).then(function (result) {
+      createUser(result.user.uid);
+
+      var docRef = firestore.collection("users").doc(result.user.uid);
+
+      docRef.get().then(function (doc) {
+        if (doc.exists) {
+          if (doc.data().setup_complete) {
+            history.push('/dashboard');
+          }
+          else {
+            history.push('/collectinfo');
+          }
+        }
+      }).catch(function (error) {
+        alert(error.message);
+      });
+
+    }).catch(function (error) {
+      alert(error.message);
+    });
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -85,24 +94,20 @@ export default function SignInSide() {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Typography component="h1" variant="h2">
+            Sign In
           </Typography>
-          <form className={classes.form} noValidate>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={() => googleSignIn()}
-            >
-              Sign In With Google
-            </Button>
-
-          </form>
+          <br />
+          <br />
+          <img src={googleImage}
+            width="50%"
+            onClick={googleSignIn} />
+          <br />
+          <img src={logo} style={{ position: "absolute", bottom: 0, marginBottom: "20px" }} width="30%" />
         </div>
       </Grid>
     </Grid>
   );
-}
+};
+
+export default SignInSide;
