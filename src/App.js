@@ -8,7 +8,7 @@ import Dashboard from './pages/Dashboard'
 import SignInSide from './pages/SignIn';
 import Demo from './pages/Demo';
 import Sales from './pages/Sales';
-import NewOrder from './pages/NewOrder';
+import NewOrderPage from './pages/NewOrderPage';
 
 import {
   BrowserRouter as Router,
@@ -20,7 +20,7 @@ export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/new_order" component={NewOrder} />
+        <Route path="/new_order" component={NewOrderPage} />
         <Route path="/demo" component={Demo} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/orders" component={Sales} />

@@ -24,6 +24,8 @@ import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
 import Orders from '../components/Orders';
 import OrderList from '../components/OrderList';
+import SelectedList from '../components/SelectedList';
+import Cart from '../components/Cart';
 import NewOrderStepper from '../components/NewOrderStepper';
 import { useHistory } from 'react-router-dom';
 
@@ -121,9 +123,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewOrder() {
+export default function NewOrder(props) {
   const history = useHistory();
-  const routeChange = () =>{ 
+  const routeChange = () =>{
     history.push("/orders");
   }
   const classes = useStyles();
@@ -177,8 +179,10 @@ export default function NewOrder() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="lg" className={classes.container} align="center">
           <NewOrderStepper />
+          <Cart props={props.props} />
+          <SelectedList props={props.props} />
           <Box pt={4}>
             <Copyright />
           </Box>

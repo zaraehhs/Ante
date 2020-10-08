@@ -103,7 +103,7 @@ export default function NewOrderStepper() {
           );
         })}
       </Stepper>
-      <div>
+      <div align="center">
         {activeStep === steps.length ? (
           <div>
             <Typography className={classes.instructions}>

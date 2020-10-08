@@ -20,18 +20,20 @@ class Orders extends React.Component {
 
     this.unsubscribeFromSnapshot = salesDB.onSnapshot(async snapshot => {
       const list = snapshot.docs.map(doc => {
-          const { 
-            items, 
-            name, 
-            total, 
-            timestamp 
+          const {
+            items,
+            name,
+            total,
+            timestamp
           } = doc.data();
 
           const summary = [];
           const date = new Date(timestamp['seconds']*1000 + timestamp['nanoseconds']);
-          for (let i = 0; i < items.length; i++) {
-            let item = items[i];
-            summary.push(item.item_quantity + ' x ' + item.item_name);
+          if (items) {
+            for (let i = 0; i < items.length; i++) {
+              let item = items[i];
+              summary.push(item.item_quantity + ' x ' + item.item_name);
+            }
           }
 
           const order_dp = {
