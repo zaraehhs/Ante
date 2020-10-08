@@ -1,42 +1,57 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
-import { FixedSizeList } from 'react-window';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    height: 400,
-    maxWidth: 300,
+    maxWidth: '100ch',
     backgroundColor: theme.palette.background.paper,
   },
+  inline: {
+    display: 'inline',
+  },
 }));
-
-function renderRow(props) {
-  const { index, style } = props;
-
-  return (
-    <ListItem button style={style} key={index}>
-      <ListItemText primary={`Item ${index + 1}`} />
-    </ListItem>
-  );
-}
-
-renderRow.propTypes = {
-  index: PropTypes.number.isRequired,
-  style: PropTypes.object.isRequired,
-};
 
 export default function SelectedList(props) {
   const classes = useStyles();
 
+  const selected = props.props.selected;
+
   return (
-    <div className={classes.root}>
-      <FixedSizeList height={400} width={300} itemSize={46} itemCount={200}>
-        {renderRow}
-      </FixedSizeList>
-    </div>
+    <List className={classes.root}>
+      {selected.map(item => (
+        <>
+        <ListItem alignItems="flex-start">
+          <ListItemAvatar>
+            <Avatar alt={item.name} src={item.image} />
+          </ListItemAvatar>
+          <ListItemText
+            primary={item.name}
+            secondary={
+              <React.Fragment>
+                <Typography
+                  component="span"
+                  variant="body2"
+                  className={classes.inline}
+                  color="textPrimary"
+                >
+                  subtotal: ${item.total}
+                </Typography>
+                {` = ${item.quantity} x $${item.price}`}
+              </React.Fragment>
+            }
+          />
+        </ListItem>
+        <Divider variant="inset" component="li" />
+        </>
+      ))}
+    </List>
   );
 }

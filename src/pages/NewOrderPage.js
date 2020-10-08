@@ -8,6 +8,7 @@ class NewOrderPage extends React.Component {
     this.state = {
       items: [],
       selected: [],
+      current_step: 0,
     };
   }
 
@@ -19,31 +20,65 @@ class NewOrderPage extends React.Component {
           let {
             name,
             quantity,
+            price,
           } = doc.data();
 
           const item =  {
             id: doc.id,
             name: name,
             quantity: quantity,
+            price: price,
+            image: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Bagel-Plain-Alt.jpg",
             add: () => {
               if (quantity === 0) {
                 alert("No more such item currently available");
                 return;
               }
-              this.state.selected.push({
-                id: doc.id,
-                name: name,
-              });
-              quantity --;
-            },
-            remove: () => {
-              for (let i = 0; i < this.state.selected.length; i++) {
-                if (this.state.selected[i].id === doc.id) {
-                  this.state.selected.splice(i, 1);
-                  quantity ++;
+              let selected = this.state.selected;
+              let found = false;
+              for (let i = 0; i < selected.length; i++) {
+                if (selected[i].id === doc.id) {
+                  selected[i].quantity ++;
+                  selected[i].total += price;
+                  found = true;
                   break;
                 }
               }
+              if (!found) {
+                selected.push({
+                  id: doc.id,
+                  name: name,
+                  quantity: 1,
+                  total: price,
+                  price: price,
+                  image: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Bagel-Plain-Alt.jpg",
+                });
+              }
+              quantity --;
+              this.setState({
+                selected: selected,
+              })
+              console.log(this.state.selected);
+            },
+            remove: () => {
+              let selected = this.state.selected;
+              for (let i = 0; i < selected.length; i++) {
+                if (selected[i].id === doc.id) {
+                  if (selected[i].quantity === 1) {
+                    selected.splice(i, 1);
+                  }
+                  else {
+                    selected[i].quantity --;
+                    selected[i].total -= price;
+                  }
+                  break;
+                }
+              }
+              quantity ++;
+              this.setState({
+                selected: selected,
+              })
+              console.log(this.state.selected);
             },
           }
 

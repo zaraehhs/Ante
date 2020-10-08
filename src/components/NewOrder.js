@@ -26,6 +26,7 @@ import Orders from '../components/Orders';
 import OrderList from '../components/OrderList';
 import SelectedList from '../components/SelectedList';
 import Cart from '../components/Cart';
+import TotalAmount from '../components/TotalAmount';
 import NewOrderStepper from '../components/NewOrderStepper';
 import { useHistory } from 'react-router-dom';
 
@@ -180,9 +181,10 @@ export default function NewOrder(props) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container} align="center">
-          <NewOrderStepper />
+          <NewOrderStepper props={props.props} />
           <Cart props={props.props} />
           <SelectedList props={props.props} />
+          <TotalAmount props={props.props} />
           <Box pt={4}>
             <Copyright />
           </Box>

@@ -20,23 +20,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Select items and quantities', 'Review', 'Payment'];
+  return ['Select items and quantities', 'Customer Info', 'Payment'];
 }
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return 'Select items and quantities';
+      return '';
     case 1:
-      return 'Review the items and quantities are correct';
+      return '';
     case 2:
-      return 'Payment processing';
+      return '';
     default:
       return 'Unknown step';
   }
 }
 
-export default function NewOrderStepper() {
+export default function NewOrderStepper(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());

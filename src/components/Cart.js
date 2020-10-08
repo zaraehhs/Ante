@@ -72,10 +72,10 @@ export default function Cart(props) {
         </GridListTile>
         {cart_props.items.map((tile) => (
           <GridListTile key={tile.id}>
-            <img src={"https://upload.wikimedia.org/wikipedia/commons/1/1d/Bagel-Plain-Alt.jpg"} alt={tile.name} />
+            <img src={tile.image} alt={tile.name} />
             <GridListTileBar
               title={tile.name}
-              subtitle={<span>Stock: {tile.quantity}</span>}
+              subtitle={<span>Stock: {tile.quantity} | Price: ${tile.price}</span>}
               actionIcon={
                 <>
                 <IconButton aria-label={`info about ${tile.name}`} className={classes.icon} onClick={tile.add}>
