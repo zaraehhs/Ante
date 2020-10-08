@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridList: {
     width: 500,
-    height: 450,
+    height: 500,
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
@@ -59,10 +59,6 @@ export default function Cart(props) {
   //     author: 'author',
   //   },
   // ];
-  const handleClick = (e) => {
-    console.log(e);
-    alert(e);
-  }
 
   return (
     <div className={classes.root}>

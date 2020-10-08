@@ -16,6 +16,7 @@ export default function TotalAmount(props) {
   for (let i = 0; i < selected.length; i++) {
     subtotal += selected[i].total;
   }
+  props.props.total = subtotal;
 
   if (selected.length === 0) return (<></>);
   return (

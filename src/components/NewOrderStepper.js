@@ -5,6 +5,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,7 @@ function getStepContent(step) {
 }
 
 export default function NewOrderStepper(props) {
+  const step_props = props.props;
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -57,12 +59,16 @@ export default function NewOrderStepper(props) {
       newSkipped.delete(activeStep);
     }
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+    if(step_props.next_step()) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      setSkipped(newSkipped);
+    }
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if(step_props.prev_step()) {
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    }
   };
 
   const handleSkip = () => {
@@ -80,8 +86,10 @@ export default function NewOrderStepper(props) {
     });
   };
 
+  const history = useHistory();
+
   const handleReset = () => {
-    setActiveStep(0);
+    history.push("/orders");
   };
 
   return (
@@ -120,17 +128,6 @@ export default function NewOrderStepper(props) {
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                 Back
               </Button>
-              {isStepOptional(activeStep) && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSkip}
-                  className={classes.button}
-                >
-                  Skip
-                </Button>
-              )}
-
               <Button
                 variant="contained"
                 color="primary"

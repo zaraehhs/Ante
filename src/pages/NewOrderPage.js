@@ -9,11 +9,68 @@ class NewOrderPage extends React.Component {
       items: [],
       selected: [],
       current_step: 0,
+      customer_name: "",
+      customer_email: "",
+      customer_phone: "",
+      customer_address: "",
+      customer_membership: "",
+      customer_other: "",
+      business: "",
+      total: 0,
+      next_step: () => {
+        switch (this.state.current_step) {
+          case 0:
+            if (this.state.selected.length === 0) {
+              alert("Add item(s) into cart to proceed");
+              return false;
+            }
+            this.setState({current_step: 1});
+            return true;
+          case 1:
+            this.setState({current_step: 2});
+            return true;
+          case 2:
+            firestore.collection("sales").add({
+                name: this.state.customer_name,
+                email: this.state.customer_email,
+                phone: this.state.customer_phone,
+                address: this.state.customer_address,
+                membership: this.state.customer_membership,
+                other: this.state.customer_other,
+                items: this.state.selected,
+                business: this.state.business,
+                total: this.state.total,
+                timestamp: new Date(),
+            }).then(function (docRef) {
+              alert("Order Placed")
+            }).catch(function (error) {
+              alert("An error has occured");
+            });
+            return true;
+          default:
+            return false;
+        }
+      },
+      prev_step: () => {
+        switch (this.state.current_step) {
+          case 0:
+            return false;
+          case 1:
+            this.setState({current_step: 0});
+            return true;
+          case 2:
+            this.setState({current_step: 1});
+            return true;
+          default:
+            return false;
+        }
+      }
     };
   }
 
   componentDidMount() {
     const db = firestore.collection("inventory");
+    let business = "";
 
     this.unsubscribeFromSnapshot = db.onSnapshot(async snapshot => {
       const list = snapshot.docs.map(doc => {
@@ -21,8 +78,8 @@ class NewOrderPage extends React.Component {
             name,
             quantity,
             price,
+            business,
           } = doc.data();
-
           const item =  {
             id: doc.id,
             name: name,
@@ -58,7 +115,6 @@ class NewOrderPage extends React.Component {
               this.setState({
                 selected: selected,
               })
-              console.log(this.state.selected);
             },
             remove: () => {
               let selected = this.state.selected;
@@ -86,6 +142,7 @@ class NewOrderPage extends React.Component {
       });
       this.setState(
         {
+          business: business,
           items: list,
       });
     });

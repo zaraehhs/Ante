@@ -32,7 +32,7 @@ class Orders extends React.Component {
           if (items) {
             for (let i = 0; i < items.length; i++) {
               let item = items[i];
-              summary.push(item.item_quantity + ' x ' + item.item_name);
+              summary.push(item.quantity + ' x ' + item.name);
             }
           }
 

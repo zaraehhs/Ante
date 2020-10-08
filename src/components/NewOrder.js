@@ -28,6 +28,7 @@ import SelectedList from '../components/SelectedList';
 import Cart from '../components/Cart';
 import TotalAmount from '../components/TotalAmount';
 import NewOrderStepper from '../components/NewOrderStepper';
+import CustomerInfo from '../components/CustomerInfo';
 import { useHistory } from 'react-router-dom';
 
 function Copyright() {
@@ -139,6 +140,27 @@ export default function NewOrder(props) {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  const handleSteps = () => {
+    switch (props.props.current_step) {
+      case 0:
+        return (
+          <>
+          <Cart props={props.props} />
+          <SelectedList props={props.props} />
+          <TotalAmount props={props.props} />
+          </>
+        );
+      case 1:
+        return (
+          <>
+          <CustomerInfo props={props.props} />
+          </>
+        );
+      default:
+        return (<></>);
+    }
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -182,9 +204,7 @@ export default function NewOrder(props) {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container} align="center">
           <NewOrderStepper props={props.props} />
-          <Cart props={props.props} />
-          <SelectedList props={props.props} />
-          <TotalAmount props={props.props} />
+          {handleSteps()}
           <Box pt={4}>
             <Copyright />
           </Box>
