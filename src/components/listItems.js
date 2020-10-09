@@ -12,6 +12,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import Dashboard from '../pages/Dashboard'
 import { Link } from 'react-router-dom';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import ViewListIcon from '@material-ui/icons/ViewList';
 
 function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
@@ -40,29 +41,25 @@ export const mainListItems = (
       <ListItemText primary="Sales" />
     </ListItemLink>
 
-
-    <ListItem button>
+    <ListItemLink href="/userprofile">
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemLink>
-        <ListItemText primary="Profile" />
-      </ListItemLink>
-    </ListItem>
-    <ListItem button>
+      <ListItemText primary="Profile" />
+    </ListItemLink>
+
+    <ListItemLink href="/inventory">
       <ListItemIcon>
-        <LayersIcon />
+        <ViewListIcon />
       </ListItemIcon>
-      <ListItemLink>
-        <ListItemText primary="Staff" />
-      </ListItemLink>
-    </ListItem>
+      <ListItemText primary="Inventory" />
+    </ListItemLink>
   </>
 );
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>More reports</ListSubheader>
+    {/* <ListSubheader inset>More reports</ListSubheader>
     <ListItem button>
       <ListItemIcon>
         <AssignmentIcon />
@@ -80,6 +77,6 @@ export const secondaryListItems = (
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="Year-end sale" />
-    </ListItem>
+    </ListItem> */}
   </div>
 );
