@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from 'clsx';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -20,9 +19,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../components/listItems';
-import Name from "../userComponents/Name";
-import Credentials from "../userComponents/Credentials";
-import Contact from "../userComponents/Contact";
 import Items from "../inventoryComponents/Items";
 
 function Copyright() {

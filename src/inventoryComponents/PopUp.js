@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { firestore } from "../firebase/firebase.utils";
 import { number } from "prop-types";
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 export default class PopUp extends Component {
     constructor(props) {
@@ -44,19 +47,50 @@ export default class PopUp extends Component {
         <div className="modal_content">
         <span className="close" onClick={this.handleClick}>&times;    </span>
         <form onSubmit={this.mySubmitHandler}>
-        <label>
-            Menu Item:
-            <input type="text" name="name" onChange={this.menuItemHandler}/>
-        </label> <br></br>
-        <label>
-            Price:
-            <input type="float" name="price" onChange={this.priceHandler}/>
-        </label> <br></br>
-        <label>
-            Quantity:
-            <input type="number" name="quantity" onChange={this.quantityHandler}/>
-        </label> <br></br>
-        <input type="submit" value="Add Item"></input>
+        <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+                <TextField
+                    autoComplete="menu"
+                    name="name"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="menuItem"
+                    label="Menu Item"
+                    autoFocus
+                    onChange={this.menuItemHandler}
+                />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <TextField
+                    autoComplete="pricing"
+                    name="price"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="price"
+                    label="Price"
+                    autoFocus
+                    onChange={this.priceHandler}
+                /> 
+            </Grid>
+            <Grid item xs={12}>
+                <TextField
+                    autoComplete="qnty"
+                    name="quantity"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="quantity"
+                    label="Quantity"
+                    autoFocus
+                    onChange={this.quantityHandler}
+                />
+            </Grid>
+            <Grid item xs={12}>
+                <Button type="submit" fullWidth variant="contained" color="primary"> Add Item </Button>
+            </Grid>
+        </Grid>
         </form>
         </div>
         </div>

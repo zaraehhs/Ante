@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import { firestore } from "../firebase/firebase.utils";
 import PopUp from "./PopUp"; 
 
@@ -33,8 +32,19 @@ class Items extends React.Component {
         this.unsubscribeFromSnapshot();
     }
 
-    remove = () => {
+    remove = (event) => {
+        event.preventDefault();
         alert("remove!");
+
+        var postsRef = firestore.collection('inventory');
+        postsRef.where('name', '==', 'cookie').get().then(snapshot => {
+            snapshot.forEach(doc => {
+            console.log(doc.id, '=>', doc.data());
+            firestore.collection('inventory').doc(doc.id).delete();
+        });
+        }).catch(err => {
+            console.log('Error getting documents', err);
+        });
     }
 
     edit = () => {
@@ -45,33 +55,29 @@ class Items extends React.Component {
         this.setState({
          showForm: !this.state.showForm
         });
-       };
+    };
 
     render() {
         return <>
         <div className="btn" onClick={this.togglePop}>
-            <Button variant="contained" color="primary">
-                  Add Menu Item</Button>
-    </div>
-    {this.state.showForm ? <PopUp toggle={this.togglePop} /> : null}
-    &nbsp;&nbsp;&nbsp;
-            {
-                this.state.items.map(({ bid, menu_item, pricing, qnty }) => (
-                    <>
-                    <span> BID: {bid} </span>
-                    <span> Item: {menu_item} </span> 
-                    <span> Price: {pricing} </span> 
-                    <span> Quantity: {qnty} </span>
-                    &nbsp;&nbsp;&nbsp;
-                    <div></div>
-                    <Button variant="contained" color="grey" onClick={this.remove}>Delete</Button>
-                    &nbsp;&nbsp;&nbsp;
-                    <Button variant="contained" color="grey" onClick={this.edit}>Edit</Button>
-                    <br></br>
-                    </>
-                ))
-            }
-            
+            <Button variant="contained" color="primary">Add Menu Item</Button>
+        </div>
+        {this.state.showForm ? <PopUp toggle={this.togglePop} /> : null} &nbsp;&nbsp;&nbsp;
+        { 
+            this.state.items.map(({ bid, menu_item, pricing, qnty }) => (
+            <>
+            <span> BID: {bid} </span>
+            <span> Item: {menu_item} </span> 
+            <span> Price: {pricing} </span> 
+            <span> Quantity: {qnty} </span>
+                &nbsp;&nbsp;&nbsp;
+            <Button variant="contained" color="secondary" onClick={this.remove.bind(this)}>Delete</Button>
+                &nbsp;&nbsp;&nbsp;
+            <Button variant="contained" color="secondary" onClick={this.edit}>Edit</Button>
+                &nbsp;&nbsp;&nbsp;
+            </>
+            ))
+        }   
         </>
     }
 }
