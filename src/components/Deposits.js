@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
 import { firestore } from "../firebase/firebase.utils";
-
+import { UserContext } from "../firebase/auth-provider";
 
 const useStyles = makeStyles({
   depositContext: {
@@ -16,9 +16,10 @@ export default function Deposits() {
   const classes = useStyles();
   const [total, settotal] = useState([]);
   const [days, setdate] = useState([]);
+  const business = useContext(UserContext).business;
 
   useEffect(() => {
-    const salesDB = firestore.collection("zaratestdata");
+    const salesDB = firestore.collection("sales").where("business", "==", business);
 
     const unsubscribeFromSnapshot = salesDB.onSnapshot(async snapshot => {
       console.log("check");
@@ -32,7 +33,7 @@ export default function Deposits() {
       snapshot.docs.forEach((doc) => {
         const { timestamp, total} = doc.data();
 
-        let today1 = timestamp.toDate();  // get the date
+        let today1 = new Date(timestamp);  // get the date
         let day1 = ("0" + today1.getDate()).slice(-2);  //get day with slice to have double digit day
         let month1 = ("0" + (today1.getMonth() + 1)).slice(-2); //get your zero in front of single month digits so you have 2 digit months
         let purchaseDate = month1 + '/' + day1 + '/' + today1.getFullYear();    

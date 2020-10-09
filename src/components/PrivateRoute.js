@@ -5,8 +5,8 @@ import { UserContext } from "../firebase/auth-provider";
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const user = useContext(UserContext);
-    
+    const user = useContext(UserContext).user;
+
     return (
 
         // Show the component only when the user is logged in

@@ -8,15 +8,20 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import { firestore } from "../firebase/firebase.utils";
+import { UserContext } from "../firebase/auth-provider";
 
 class Orders extends React.Component {
+
+  static contextType = UserContext;
+
   constructor(props) {
     super(props);
     this.state = {orders: []};
   }
 
   componentDidMount() {
-    const salesDB = firestore.collection("sales");
+    const { user, business } = this.context;
+    const salesDB = firestore.collection("sales").where("business", "==", business);
 
     this.unsubscribeFromSnapshot = salesDB.onSnapshot(async snapshot => {
       const list = snapshot.docs.map(doc => {
@@ -28,7 +33,7 @@ class Orders extends React.Component {
           } = doc.data();
 
           const summary = [];
-          const date = new Date(timestamp['seconds']*1000 + timestamp['nanoseconds']);
+          const date = new Date(timestamp);
           if (items) {
             for (let i = 0; i < items.length; i++) {
               let item = items[i];

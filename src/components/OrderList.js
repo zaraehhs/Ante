@@ -1,15 +1,20 @@
 import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { firestore } from "../firebase/firebase.utils";
+import { UserContext } from "../firebase/auth-provider";
 
 class OrderList extends React.Component {
+  
+  static contextType = UserContext;
+
   constructor(props) {
     super(props);
     this.state = {rows: []};
   }
 
   componentDidMount() {
-    const salesDB = firestore.collection("sales");
+    const { user, business } = this.context;
+    const salesDB = firestore.collection("sales").where("business", "==", business);
 
     this.unsubscribeFromSnapshot = salesDB.onSnapshot(async snapshot => {
       const list = snapshot.docs.map(doc => {
@@ -21,7 +26,7 @@ class OrderList extends React.Component {
           } = doc.data();
 
           const summary = [];
-          const date = new Date(timestamp['seconds']*1000 + timestamp['nanoseconds']);
+          const date = new Date(timestamp);
           if (items) {
             for (let i = 0; i < items.length; i++) {
               let item = items[i];
@@ -31,7 +36,7 @@ class OrderList extends React.Component {
 
           const order =  {
             id: doc.id,
-            timestamp: timestamp['seconds']*1000 + timestamp['nanoseconds'],
+            timestamp: timestamp,
             date: date.toLocaleString(),
             customer: name,
             summary: summary.join(', '),
