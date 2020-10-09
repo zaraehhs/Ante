@@ -9,45 +9,53 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import Dashboard from '../pages/Dashboard'
+
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 
 export const mainListItems = (
   <div>
-    <ListItem button>
+    <ListItem button href= "../pages/Dashboard">
+      <div></div>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemLink href= "../pages/Dashboard"> 
+      <ListItemText primary="Dashboard"/>
+      </ListItemLink>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
+      <ListItemLink>
       <ListItemText primary="Orders" />
+      </ListItemLink>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
+      <ListItemLink>
+      <ListItemText primary="Profile" />
+      </ListItemLink>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemLink>
+      <ListItemText primary="Staff" />
+      </ListItemLink>
     </ListItem>
   </div>
 );
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
+    <ListSubheader inset>More reports</ListSubheader>
     <ListItem button>
       <ListItemIcon>
         <AssignmentIcon />
