@@ -14,6 +14,7 @@ import UserProvider from "./firebase/auth-provider";
 import PrivateRoute from "./components/PrivateRoute";
 import UserProfile from './pages/UserProfile';
 import Inventory from './pages/Inventory';
+import CollectInfo from "./pages/CollectInfo";
 
 import {
   BrowserRouter as Router,
@@ -31,6 +32,7 @@ export default function App() {
           <PrivateRoute path="/new_order" component={NewOrderPage} exact />
           <PrivateRoute path="/dashboard" component={Dashboard} exact />
           <PrivateRoute path="/orders" component={Sales} exact />
+          <PrivateRoute path="/collectinfo" component={CollectInfo} exact />
           <Route path="/signin" component={SignInSide} exact />
           <Route path="/" component={Landing} />
         </Switch>
