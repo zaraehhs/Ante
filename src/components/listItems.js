@@ -9,45 +9,60 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import Dashboard from '../pages/Dashboard'
+import { Link } from 'react-router-dom';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 
 export const mainListItems = (
-  <div>
-    <ListItem button>
+  <>
+    <ListItemLink href="/dashboard">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
-    </ListItem>
-    <ListItem button>
+    </ListItemLink>
+
+    <ListItemLink href="/new_order">
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItem>
+      <ListItemText primary="Checkout" />
+    </ListItemLink>
+
+    <ListItemLink href="/orders">
+      <ListItemIcon>
+        <MonetizationOnIcon />
+      </ListItemIcon>
+      <ListItemText primary="Sales" />
+    </ListItemLink>
+
+
     <ListItem button>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
+      <ListItemLink>
+        <ListItemText primary="Profile" />
+      </ListItemLink>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemLink>
+        <ListItemText primary="Staff" />
+      </ListItemLink>
     </ListItem>
-  </div>
+  </>
 );
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
+    <ListSubheader inset>More reports</ListSubheader>
     <ListItem button>
       <ListItemIcon>
         <AssignmentIcon />
