@@ -1,34 +1,92 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Title from './Title';
+import { firestore } from "../firebase/firebase.utils";
+import { UserContext } from "../firebase/auth-provider";
+
+
+/* class Sales extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {sales: []};
+
+    console.log(this.state)
+  } */
 
 // Generate Sales Data
-function createData(time, amount) {
+/* function createData(time, amount) {
   return { time, amount };
-}
+} 
+
+//Number of sales per month. 
 
 const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00', undefined),
-];
+  createData('Jan', 0),
+  createData('Feb', 300),
+  createData('Mar', 600),
+  createData('Apr', 800),
+  createData('May', 1500),
+  createData('Jun', 2000),
+  createData('Jul', 2400),
+  createData('Aug', 2400),
+  createData('Sept', 2000),
+  createData('Oct', 2400),
+  createData('Nov', 2400),
+  createData('Dec', undefined),
+]; */
 
 export default function Chart() {
   const theme = useTheme();
+  const [salesList, setSalesList] = useState([]);
+
+  const business = useContext(UserContext).business;
+
+
+
+  useEffect(() => {
+    const salesDB = firestore.collection("sales").where("business", "==", business);
+
+    //Count number of sales per month. 1 entry = 1 sale 
+    //get month from timestamp
+    const unsubscribeFromSnapshot = salesDB.onSnapshot(async snapshot => {
+      console.log("check");
+      const monthCounts = {};
+      snapshot.docs.forEach((doc) => {
+        console.log("check1");
+
+        const { timestamp } = doc.data();
+        const date = new Date(timestamp);
+        const month = date.toLocaleString('default', { month: 'long' });
+        if (monthCounts[month]) {
+          monthCounts[month] = monthCounts[month] + 1
+        } else {
+          monthCounts[month] = 1
+        }
+
+
+      });
+
+      console.log(monthCounts);
+      // {"Octoboe": 4, "September": 5, "Janurary": 7}
+      // [{time: "October", amount:4}, {time: "September", amount: 5}]
+      const sales = Object.keys(monthCounts).map((key) => {
+        return { time: key, amount: monthCounts[key] }
+      });
+      setSalesList(sales);
+    });
+    return () => {
+      unsubscribeFromSnapshot(); //unmounts
+    }
+  }, []); //anytime [] changes
+
 
   return (
     <React.Fragment>
-      <Title>Today</Title>
+      <Title> Average Monthly Sales</Title>
       <ResponsiveContainer>
         <LineChart
-          data={data}
+          data={salesList}
           margin={{
             top: 16,
             right: 16,

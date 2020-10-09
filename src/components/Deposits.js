@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
-
-function preventDefault(event) {
-  event.preventDefault();
-}
+import { firestore } from "../firebase/firebase.utils";
+import { UserContext } from "../firebase/auth-provider";
 
 const useStyles = makeStyles({
   depositContext: {
@@ -16,19 +14,69 @@ const useStyles = makeStyles({
 
 export default function Deposits() {
   const classes = useStyles();
+  const [total, settotal] = useState([]);
+  const [days, setdate] = useState([]);
+  const business = useContext(UserContext).business;
+
+  useEffect(() => {
+    const salesDB = firestore.collection("sales").where("business", "==", business);
+
+    const unsubscribeFromSnapshot = salesDB.onSnapshot(async snapshot => {
+      console.log("check");
+      const totals = []; 
+
+      let today = new Date();  // get the date
+      let day = ("0" + today.getDate()).slice(-2);  //get day with slice to have double digit day
+      let month = ("0" + (today.getMonth() + 1)).slice(-2); //get your zero in front of single month digits so you have 2 digit months
+      let todaysdate = month + '/' + day + '/' + today.getFullYear();    
+
+      snapshot.docs.forEach((doc) => {
+        const { timestamp, total} = doc.data();
+
+        let today1 = new Date(timestamp);  // get the date
+        let day1 = ("0" + today1.getDate()).slice(-2);  //get day with slice to have double digit day
+        let month1 = ("0" + (today1.getMonth() + 1)).slice(-2); //get your zero in front of single month digits so you have 2 digit months
+        let purchaseDate = month1 + '/' + day1 + '/' + today1.getFullYear();    
+
+  
+
+        if (todaysdate == purchaseDate) {
+          totals.push(total); 
+        }        
+      },);
+
+      
+      const sum = totals.reduce(function(a, b){
+        return a + b;
+    }, 0);
+
+       
+      settotal(sum);
+      setdate(todaysdate); 
+  
+    });
+    return () => {
+      unsubscribeFromSnapshot(); //unmounts
+    }
+  },[]); //anytime [] changes
+
+
+
+
+
+
+  
   return (
     <React.Fragment>
-      <Title>Recent Deposits</Title>
-      <Typography component="p" variant="h4">
-        $3,024.00
+      <Title>Today's Sales</Title>
+      <Typography component="p" variant="h4"> $
+        {total}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        on 15 March, 2019
+        {days}
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View balance
-        </Link>
+        
       </div>
     </React.Fragment>
   );
