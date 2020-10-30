@@ -55,17 +55,7 @@ export default class PopUp extends Component {
                     <form onSubmit={this.mySubmitHandler}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
-                                <TextField
-                                    autoComplete="menu"
-                                    name="name"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="menuItem"
-                                    label="Menu Item"
-                                    autoFocus
-                                    onChange={this.menuItemHandler}
-                                />
+                                <TextField autoComplete="menu" name="name" variant="outlined" required fullWidth id="menuItem" label="Menu Item" autoFocus onChange={this.menuItemHandler}/>
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField

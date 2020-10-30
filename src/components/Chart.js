@@ -5,37 +5,6 @@ import Title from './Title';
 import { firestore } from "../firebase/firebase.utils";
 import { UserContext } from "../firebase/auth-provider";
 
-
-/* class Sales extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {sales: []};
-
-    console.log(this.state)
-  } */
-
-// Generate Sales Data
-/* function createData(time, amount) {
-  return { time, amount };
-} 
-
-//Number of sales per month. 
-
-const data = [
-  createData('Jan', 0),
-  createData('Feb', 300),
-  createData('Mar', 600),
-  createData('Apr', 800),
-  createData('May', 1500),
-  createData('Jun', 2000),
-  createData('Jul', 2400),
-  createData('Aug', 2400),
-  createData('Sept', 2000),
-  createData('Oct', 2400),
-  createData('Nov', 2400),
-  createData('Dec', undefined),
-]; */
-
 export default function Chart() {
   const theme = useTheme();
   const [salesList, setSalesList] = useState([]);
