@@ -17,13 +17,18 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
 import OrderList from '../components/OrderList';
-import { AlternateEmail } from '@material-ui/icons';
-import { auth } from "../firebase/firebase.utils";
+import SelectedList from '../components/SelectedList';
+import Cart from '../components/Cart';
+import TotalAmount from '../components/TotalAmount';
+import NewOrderStepper from '../components/NewOrderStepper';
+import CustomerInfo from '../components/CustomerInfo';
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -119,8 +124,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
-
+export default function NewOrder(props) {
+  const history = useHistory();
+  const routeChange = () => {
+    history.push("/orders");
+  }
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -131,10 +139,26 @@ export default function Dashboard() {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const logout = () => {
-    auth.signOut();
+  const handleSteps = () => {
+    switch (props.props.current_step) {
+      case 0:
+        return (
+          <>
+            <Cart props={props.props} />
+            <SelectedList props={props.props} />
+            <TotalAmount props={props.props} />
+          </>
+        );
+      case 1:
+        return (
+          <>
+            <CustomerInfo props={props.props} />
+          </>
+        );
+      default:
+        return (<></>);
+    }
   }
-
 
   return (
     <div className={classes.root}>
@@ -152,10 +176,10 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            New Order
           </Typography>
-          <IconButton color="inherit">
-            <ExitToAppIcon id="clickTwo" onClick={logout} />
+          <IconButton id="clickTwo" color="" aria-label="add to shopping cart" onClick={routeChange}>
+            <ShoppingCartIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -167,7 +191,7 @@ export default function Dashboard() {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton id="clickThree" onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -178,27 +202,9 @@ export default function Dashboard() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <OrderList />
-              </Paper>
-            </Grid>
-          </Grid>
+        <Container maxWidth="lg" className={classes.container} align="center">
+          <NewOrderStepper props={props.props} />
+          {handleSteps()}
           <Box pt={4}>
             <Copyright />
           </Box>

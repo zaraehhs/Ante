@@ -17,13 +17,13 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
 import OrderList from '../components/OrderList';
-import { AlternateEmail } from '@material-ui/icons';
-import { auth } from "../firebase/firebase.utils";
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -119,8 +119,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
-
+export default function Sales() {
+  const history = useHistory();
+  const routeChange = () =>{
+    history.push("/new_order");
+  }
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -131,18 +134,12 @@ export default function Dashboard() {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const logout = () => {
-    auth.signOut();
-  }
-
-
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
-            id="clickOne"
             edge="start"
             color="inherit"
             aria-label="open drawer"
@@ -152,10 +149,10 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            Orders
           </Typography>
-          <IconButton color="inherit">
-            <ExitToAppIcon id="clickTwo" onClick={logout} />
+          <IconButton color="" aria-label="add to shopping cart" onClick={routeChange}>
+            <AddShoppingCartIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -167,7 +164,7 @@ export default function Dashboard() {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton id="clickThree" onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -180,18 +177,6 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
