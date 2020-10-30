@@ -22,7 +22,6 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
-import Orders from '../components/Orders';
 import OrderList from '../components/OrderList';
 import { useHistory } from 'react-router-dom';
 
@@ -122,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Sales() {
   const history = useHistory();
-  const routeChange = () =>{ 
+  const routeChange = () =>{
     history.push("/new_order");
   }
   const classes = useStyles();

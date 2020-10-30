@@ -22,7 +22,6 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
-import Orders from '../components/Orders';
 import OrderList from '../components/OrderList';
 import SelectedList from '../components/SelectedList';
 import Cart from '../components/Cart';
