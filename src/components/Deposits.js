@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
@@ -22,7 +21,6 @@ export default function Deposits() {
     const salesDB = firestore.collection("sales").where("business", "==", business);
 
     const unsubscribeFromSnapshot = salesDB.onSnapshot(async snapshot => {
-      console.log("check");
       const totals = []; 
 
       let today = new Date();  // get the date
@@ -38,19 +36,15 @@ export default function Deposits() {
         let month1 = ("0" + (today1.getMonth() + 1)).slice(-2); //get your zero in front of single month digits so you have 2 digit months
         let purchaseDate = month1 + '/' + day1 + '/' + today1.getFullYear();    
 
-  
-
         if (todaysdate == purchaseDate) {
           totals.push(total); 
         }        
       },);
 
-      
       const sum = totals.reduce(function(a, b){
         return a + b;
     }, 0);
-
-       
+  
       settotal(sum);
       setdate(todaysdate); 
   
@@ -60,12 +54,6 @@ export default function Deposits() {
     }
   },[]); //anytime [] changes
 
-
-
-
-
-
-  
   return (
     <React.Fragment>
       <Title>Today's Sales</Title>
@@ -75,8 +63,7 @@ export default function Deposits() {
       <Typography color="textSecondary" className={classes.depositContext}>
         {days}
       </Typography>
-      <div>
-        
+      <div>  
       </div>
     </React.Fragment>
   );

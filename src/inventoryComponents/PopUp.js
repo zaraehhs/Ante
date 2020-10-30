@@ -21,17 +21,13 @@ export default class PopUp extends Component {
 
     mySubmitHandler = (event) => {
         event.preventDefault();
-        const { user, business } = this.context;
+        const { business } = this.context;
 
-        // alert("You are submitting " + this.state.name + this.state.price + this.state.quantity);
         firestore.collection("inventory").add({
             business: business,
             name: this.state.name,
             price: this.state.price,
             quantity: this.state.quantity
-        }).then(function (docRef) {
-        }).catch(function (error) {
-            alert("Error!");
         });
     }
 

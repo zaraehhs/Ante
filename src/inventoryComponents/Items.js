@@ -14,7 +14,7 @@ class Items extends React.Component {
     unsubscribeFromSnapshot = null;
 
     componentDidMount() {
-        const { user, business } = this.context;
+        const { business } = this.context;
 
         const collectionRef = firestore.collection("inventory").where("business", "==", business);
 
@@ -29,7 +29,6 @@ class Items extends React.Component {
                 }
             });
             this.setState({ items: list });
-            // console.log(list);
         });
     }
 
@@ -58,12 +57,12 @@ class Items extends React.Component {
             </div>
             {this.state.showForm ? <PopUp toggle={this.togglePop} /> : null} &nbsp;&nbsp;&nbsp;
             {
-                this.state.items.map(({ bid, menu_item, pricing, qnty, id }) => (
+                this.state.items.map(({ menu_item, pricing, qnty, id }) => (
                     <>
                         <span> Item: {menu_item} </span>
                         <span> Price: {pricing} </span>
                         <span> Quantity: {qnty} </span>
-                &nbsp;&nbsp;&nbsp;
+                // &nbsp;&nbsp;&nbsp;
                         <Button variant="contained" color="secondary" onClick={() => this.remove(id)}>Delete</Button>
                 &nbsp;&nbsp;&nbsp;
                         <Button variant="contained" color="secondary" onClick={this.edit}>Edit</Button>

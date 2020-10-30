@@ -7,7 +7,6 @@ class NewOrderPage extends React.Component {
 
   static contextType = UserContext;
 
-
   constructor(props) {
     super(props);
     this.state = {
@@ -84,14 +83,9 @@ class NewOrderPage extends React.Component {
           name,
           quantity,
           price,
-          business,
         } = doc.data();
         price = parseFloat(price);
-        const item = {
-          id: doc.id,
-          name: name,
-          quantity: quantity,
-          price: price,
+        const item = { id: doc.id, name: name, quantity: quantity, price: price,
           image: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Bagel-Plain-Alt.jpg",
           add: () => {
             if (quantity === 0) {
@@ -110,11 +104,7 @@ class NewOrderPage extends React.Component {
             }
             if (!found) {
               selected.push({
-                id: doc.id,
-                name: name,
-                quantity: 1,
-                total: price,
-                price: price,
+                id: doc.id, name: name, quantity: 1, total: price, price: price,
                 image: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Bagel-Plain-Alt.jpg",
               });
             }
@@ -141,7 +131,6 @@ class NewOrderPage extends React.Component {
             this.setState({
               selected: selected,
             })
-            console.log(this.state.selected);
           },
         }
 

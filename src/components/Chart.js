@@ -11,19 +11,14 @@ export default function Chart() {
 
   const business = useContext(UserContext).business;
 
-
-
   useEffect(() => {
     const salesDB = firestore.collection("sales").where("business", "==", business);
 
     //Count number of sales per month. 1 entry = 1 sale 
     //get month from timestamp
     const unsubscribeFromSnapshot = salesDB.onSnapshot(async snapshot => {
-      console.log("check");
       const monthCounts = {};
       snapshot.docs.forEach((doc) => {
-        console.log("check1");
-
         const { timestamp } = doc.data();
         const date = new Date(timestamp);
         const month = date.toLocaleString('default', { month: 'long' });
@@ -32,13 +27,7 @@ export default function Chart() {
         } else {
           monthCounts[month] = 1
         }
-
-
       });
-
-      console.log(monthCounts);
-      // {"Octoboe": 4, "September": 5, "Janurary": 7}
-      // [{time: "October", amount:4}, {time: "September", amount: 5}]
       const sales = Object.keys(monthCounts).map((key) => {
         return { time: key, amount: monthCounts[key] }
       });
@@ -48,7 +37,6 @@ export default function Chart() {
       unsubscribeFromSnapshot(); //unmounts
     }
   }, []); //anytime [] changes
-
 
   return (
     <React.Fragment>
