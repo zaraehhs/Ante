@@ -142,6 +142,7 @@ export default function Dashboard() {
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
+            id="clickOne"
             edge="start"
             color="inherit"
             aria-label="open drawer"
@@ -154,7 +155,7 @@ export default function Dashboard() {
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <ExitToAppIcon onClick={logout}/>
+            <ExitToAppIcon id="clickTwo" onClick={logout} />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -166,7 +167,7 @@ export default function Dashboard() {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton id="clickThree" onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>

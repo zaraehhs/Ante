@@ -16,7 +16,7 @@ class Landing extends React.Component {
     render() {
         return <>
             <h1>Landing Page Here!</h1>
-            <Button variant="contained" color="primary" onClick={this.go}>
+            <Button variant="contained" id="CLICKME" color="primary" onClick={this.go}>
                 Get Started
             </Button>
         </>

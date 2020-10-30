@@ -96,7 +96,7 @@ class InventoryInfo extends React.Component {
                     </Grid>
 
                     <Grid item xs={12} md={2}>
-                        <Button variant="contained" onClick={this.submit}>
+                        <Button id="CLICKPLS" variant="contained" onClick={this.submit}>
                             Add
             </Button>
                     </Grid>

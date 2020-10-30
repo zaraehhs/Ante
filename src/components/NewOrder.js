@@ -126,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NewOrder(props) {
   const history = useHistory();
-  const routeChange = () =>{
+  const routeChange = () => {
     history.push("/orders");
   }
   const classes = useStyles();
@@ -144,15 +144,15 @@ export default function NewOrder(props) {
       case 0:
         return (
           <>
-          <Cart props={props.props} />
-          <SelectedList props={props.props} />
-          <TotalAmount props={props.props} />
+            <Cart props={props.props} />
+            <SelectedList props={props.props} />
+            <TotalAmount props={props.props} />
           </>
         );
       case 1:
         return (
           <>
-          <CustomerInfo props={props.props} />
+            <CustomerInfo props={props.props} />
           </>
         );
       default:
@@ -166,6 +166,7 @@ export default function NewOrder(props) {
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
+            id="clickOne"
             edge="start"
             color="inherit"
             aria-label="open drawer"
@@ -177,7 +178,7 @@ export default function NewOrder(props) {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             New Order
           </Typography>
-          <IconButton color="" aria-label="add to shopping cart" onClick={routeChange}>
+          <IconButton id="clickTwo" color="" aria-label="add to shopping cart" onClick={routeChange}>
             <ShoppingCartIcon />
           </IconButton>
         </Toolbar>

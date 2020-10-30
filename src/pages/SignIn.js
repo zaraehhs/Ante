@@ -100,6 +100,7 @@ const SignInSide = () => {
           <br />
           <br />
           <img src={googleImage}
+            id="clickME"
             width="50%"
             onClick={googleSignIn} />
           <br />
