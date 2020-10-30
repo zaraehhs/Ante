@@ -21,7 +21,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
-import Orders from '../components/Orders';
+import OrderList from '../components/OrderList';
 import { AlternateEmail } from '@material-ui/icons';
 import { auth } from "../firebase/firebase.utils";
 
@@ -120,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
-  
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -194,7 +194,7 @@ export default function Dashboard() {
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders />
+                <OrderList />
               </Paper>
             </Grid>
           </Grid>
