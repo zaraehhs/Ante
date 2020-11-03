@@ -1,68 +1,89 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ANTE
 
-## Available Scripts
+ANTE is developing simple data analytics software that is easy to use to assist entrepreneurs run their businesses more efficiently by reducing cost and increasing profit. The software will be able to help founders estimate customers, how much inventory to acquire and more.
 
-In the project directory, you can run:
+**A**uthenticity
 
-### `npm start`
+I**N**novation
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**T**echnology
 
-The page will reload if you make edits.<br />
+**E**xcellence
+
+
+## Getting started
+
+**Prerequisites:** NPM is required before developing or running this software. Please install using this website: https://www.npmjs.com/get-npm
+
+**Installing:**
+
+    npm install
+
+**Running locally:**
+
+    npm start
+
+Runs the app in the development mode.
+Open http://localhost:3000 to view it in the browser.
+The page will reload if you make edits.
 You will also see any lint errors in the console.
 
-### `npm test`
+**Warranty:** Instructions last tested on 11/2/2020 and verified to work by COMP 523 Team G on macOS Catalina.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Testing
+    npm test
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Launches full unit test suite with line coverage.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Deployment
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Production Endpoint: https://comp523-ante.web.app/
+Production Backend: https://console.firebase.google.com/u/2/project/comp523-ante/overview
+New developers must request access to the comp523-ante firebase project by contacting Team G.
+Deploy with the command: `firebase deploy`
+The application makes use of Firebase Auth, Firebase Hosting, and Cloud Firestore.
+No continuous deployment system or staging/pre-production environments currently exist. Developers should ensure proper functionality before deployment by running unit test suite as well as testing locally.
 
-### `npm run eject`
+## Technologies used
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Frontend:
+ - React
+ - Firebase Hosting
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Backend:
+ - Cloud Functions - backend business logic
+ - Cloud Firestore - database
+ - Firebase Auth - Google Auth
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+A pdf outlining the ADRs for the system is present in the root of the repo at file ADR.pdf
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Contributing
 
-## Learn More
+New developers need access to the Github repository, Firebase project, Team Trello board, and the team's [website](https://tarheels.live/comp523ante/) which includes the link to the progress journal and provides more information about Ante and the team.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Developer Rules:**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-  No style guides are explicitly required. Developers should use best judgement!
+-  Spaces are preferred over tabs 😉
+-  Reasonable commenting is a plus!
+-  All features developed in separate feature branches that later get merged into master during team meetings.
+-  Pull requests are required.
+- Developers are expected to unit test any component thoroughly before pull requests are approved.
 
-### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Authors
 
-### Analyzing the Bundle Size
+ - Akshay Jain
+ - Andrew Zhong
+ - Rhea Gupta
+ - Zara Ehsan
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+# License
+ANTE is open source software  [licensed as MIT](https://github.com/zaraehhs/Ante/blob/master/LICENSE).
 
-### Making a Progressive Web App
+## Acknowledgements
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+ - Todd Ginsberg: Team Mentor
+ - Tyrell Carter: Client
+ - Jeff Terrell: COMP 523 Professor
