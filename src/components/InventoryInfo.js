@@ -2,8 +2,6 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import { firestore, auth } from "../firebase/firebase.utils";
 
@@ -68,9 +66,6 @@ class InventoryInfo extends React.Component {
                     price: parseFloat(that.state.price),
                     quantity: parseInt(that.state.quantity),
                     business: user.uid
-                }).then(function (docRef) {
-                }).catch(function (error) {
-                    alert("Error!");
                 });
                 that.setState({ name: "", price: "", quantity: "" });
             }

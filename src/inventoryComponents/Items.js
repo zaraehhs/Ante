@@ -7,14 +7,14 @@ import { UserContext } from "../firebase/auth-provider";
 class Items extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { showForm: false, items: [] };
+        this.state = { showForm: false, items: [], editItem: null };
     }
     static contextType = UserContext;
 
     unsubscribeFromSnapshot = null;
 
     componentDidMount() {
-        const { user, business } = this.context;
+        const { business } = this.context;
 
         const collectionRef = firestore.collection("inventory").where("business", "==", business);
 
@@ -29,7 +29,6 @@ class Items extends React.Component {
                 }
             });
             this.setState({ items: list });
-            // console.log(list);
         });
     }
 
@@ -41,32 +40,40 @@ class Items extends React.Component {
         firestore.collection('inventory').doc(id).delete();
     }
 
-    edit = () => {
-        alert("edit!");
+    edit = (id, menu_item, pricing, qnty) => {
+        this.setState({
+            showForm: !this.state.showForm,
+            editItem: {
+                id: id,
+                menu_item: menu_item,
+                pricing: pricing,
+                qnty: qnty
+            }
+        });
     }
 
     togglePop = () => {
         this.setState({
-            showForm: !this.state.showForm
+            showForm: !this.state.showForm,
+            editItem: null
         });
     };
-
+    //
     render() {
         return <>
             <div className="btn" onClick={this.togglePop}>
                 <Button id="testME" variant="contained" color="primary">Add Menu Item</Button>
             </div>
-            {this.state.showForm ? <PopUp toggle={this.togglePop} /> : null} &nbsp;&nbsp;&nbsp;
+            {this.state.showForm ? <PopUp editItem={this.state.editItem} toggle={this.togglePop} /> : null}
             {
-                this.state.items.map(({ bid, menu_item, pricing, qnty, id }) => (
+                this.state.items.map(({ menu_item, pricing, qnty, id }) => (
                     <>
                         <span> Item: {menu_item} </span>
                         <span> Price: {pricing} </span>
                         <span> Quantity: {qnty} </span>
-                &nbsp;&nbsp;&nbsp;
                         <Button variant="contained" color="secondary" onClick={() => this.remove(id)}>Delete</Button>
                 &nbsp;&nbsp;&nbsp;
-                        <Button variant="contained" color="secondary" onClick={this.edit}>Edit</Button>
+                        <Button variant="contained" color="secondary" onClick={() => this.edit(id, menu_item, pricing, qnty)}>Edit</Button>
                 &nbsp;&nbsp;&nbsp;
                     </>
                 ))

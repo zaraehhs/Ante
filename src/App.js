@@ -1,11 +1,6 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
 import Dashboard from './pages/Dashboard'
 import SignInSide from './pages/SignIn';
-import Landing from "./pages/Landing";
 import Sales from './pages/Sales';
 import NewOrderPage from './pages/NewOrderPage';
 import UserProvider from "./firebase/auth-provider";
@@ -13,6 +8,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import UserProfile from './pages/UserProfile';
 import Inventory from './pages/Inventory';
 import CollectInfo from "./pages/CollectInfo";
+import Landing from "./Landing/Landing";
 
 import {
   BrowserRouter as Router,
@@ -25,8 +21,8 @@ export default function App() {
     <Router>
       <UserProvider>
         <Switch>
-          <PrivateRoute path="/userprofile" component={UserProfile} exact/>
-          <PrivateRoute path="/inventory" component={Inventory} exact/>
+          <PrivateRoute path="/userprofile" component={UserProfile} exact />
+          <PrivateRoute path="/inventory" component={Inventory} exact />
           <PrivateRoute path="/new_order" component={NewOrderPage} exact />
           <PrivateRoute path="/dashboard" component={Dashboard} exact />
           <PrivateRoute path="/orders" component={Sales} exact />
