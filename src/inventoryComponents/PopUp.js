@@ -15,20 +15,46 @@ export default class PopUp extends Component {
         this.state = { name: '', price: number, quantity: number };
     }
 
-    handleClick = () => {
-        this.props.toggle();
-    };
+
+    componentDidMount() {
+        if (this.props.editItem) {
+            this.setState({
+                name: this.props.editItem.menu_item,
+                price: this.props.editItem.pricing,
+                quantity: this.props.editItem.qnty,
+            });
+        }
+    }
 
     mySubmitHandler = (event) => {
         event.preventDefault();
+
         const { business } = this.context;
 
-        firestore.collection("inventory").add({
-            business: business,
-            name: this.state.name,
-            price: this.state.price,
-            quantity: this.state.quantity
-        });
+        var that = this;
+
+
+        if (this.props.editItem == null) {
+            firestore.collection("inventory").add({
+                business: business,
+                name: this.state.name,
+                price: this.state.price,
+                quantity: this.state.quantity
+            }).then(function () {
+                that.props.toggle();
+            });
+        }
+
+        else {
+            firestore.collection("inventory").doc(this.props.editItem.id).update({
+                business: business,
+                name: this.state.name,
+                price: this.state.price,
+                quantity: this.state.quantity
+            }).then(function () {
+                that.props.toggle();
+            });
+        }
     }
 
     menuItemHandler = (event) => {
@@ -45,27 +71,25 @@ export default class PopUp extends Component {
 
     render() {
         return (
-            <div className="modal">
-                <div className="modal_content">
-                    <span className="close" onClick={this.handleClick}>&times;    </span>
-                    <form onSubmit={this.mySubmitHandler}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField autoComplete="menu" name="name" variant="outlined" required fullWidth id="menuItem" label="Menu Item" autoFocus onChange={this.menuItemHandler}/>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField autoComplete="pricing" name="price" variant="outlined" required fullWidth id="price" label="Price" autoFocus onChange={this.priceHandler} />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField autoComplete="qnty" name="quantity" variant="outlined" required fullWidth id="quantity" label="Quantity" autoFocus onChange={this.quantityHandler} />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Button type="submit" fullWidth variant="contained" color="primary"> Add Item </Button>
-                            </Grid>
+            <>
+                <span className="close" onClick={this.props.toggle} >&times;</span>
+                <form onSubmit={this.mySubmitHandler}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                            <TextField autoComplete="menu" name="name" variant="outlined" required fullWidth id="menuItem" label="Menu Item" autoFocus onChange={this.menuItemHandler} value={this.state.name} />
                         </Grid>
-                    </form>
-                </div>
-            </div>
+                        <Grid item xs={12} sm={6}>
+                            <TextField type="number" autoComplete="pricing" name="price" variant="outlined" required fullWidth id="price" label="Price" autoFocus onChange={this.priceHandler} value={this.state.price} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField type="number" autoComplete="qnty" name="quantity" variant="outlined" required fullWidth id="quantity" label="Quantity" autoFocus onChange={this.quantityHandler} value={this.state.quantity} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button type="submit" fullWidth variant="contained" color="primary"> {this.props.editItem ? "Edit" : "Add"} Item </Button>
+                        </Grid>
+                    </Grid>
+                </form>
+            </>
         );
     }
 }
