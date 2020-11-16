@@ -177,7 +177,7 @@ export default function UserProfile() {
           <Grid container spacing={5}>
             {/* Chart */}
             <Grid item xs={12}>
-              <Paper className={fixedHeightPaper}>
+              <Paper>
                 <Items />
               </Paper>
             </Grid>
