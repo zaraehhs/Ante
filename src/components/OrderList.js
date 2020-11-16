@@ -37,7 +37,7 @@ class OrderList extends React.Component {
           const order =  {
             id: doc.id,
             timestamp: timestamp,
-            date: date.toLocaleString(),
+            date: date,
             customer: name,
             summary: summary.join(', '),
             total: "$" + total.toFixed(2),
