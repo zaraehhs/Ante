@@ -86,7 +86,7 @@ class NewOrderPage extends React.Component {
         } = doc.data();
         price = parseFloat(price);
         const item = { id: doc.id, name: name, quantity: quantity, price: price,
-          image: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Bagel-Plain-Alt.jpg",
+          image: "https://www.pngkit.com/png/detail/409-4099024_food-cut-out-png-png-images-food-circle.png",
           add: () => {
             if (quantity === 0) {
               alert("No more such item currently available");
@@ -105,7 +105,7 @@ class NewOrderPage extends React.Component {
             if (!found) {
               selected.push({
                 id: doc.id, name: name, quantity: 1, total: price, price: price,
-                image: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Bagel-Plain-Alt.jpg",
+                image: "https://www.pngkit.com/png/detail/409-4099024_food-cut-out-png-png-images-food-circle.png",
               });
             }
             quantity--;
