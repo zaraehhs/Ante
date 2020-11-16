@@ -40,7 +40,7 @@ class OrderList extends React.Component {
             date: date.toLocaleString(),
             customer: name,
             summary: summary.join(', '),
-            total: total.toFixed(2),
+            total: "$" + total.toFixed(2),
           }
 
           return order;
@@ -86,7 +86,7 @@ class OrderList extends React.Component {
   render() {
     return (
       <div style={{ height: 750, width: '100%' }}>
-        <DataGrid rows={this.state.rows} columns={this.columns} pageSize={10} checkboxSelection />
+        <DataGrid rows={this.state.rows} columns={this.columns} pageSize={12} checkboxSelection />
       </div>
     );
   }
