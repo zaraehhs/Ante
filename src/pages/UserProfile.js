@@ -249,45 +249,46 @@ export default function UserProfile() {
           <br />
           <br />
 
-          <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Employee Email</TableCell>
-                  <TableCell align="right">Remove</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {employees.map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
-                      {row.email}
-                    </TableCell>
-                    <TableCell align="right">
-                      <IconButton color="inherit">
-                        <DeleteIcon onClick={() => deleteUser(row.id)} />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <br />
-          {showForm ?
+
+
+          {bid === uid ?
             <>
+              <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Employee Email</TableCell>
+                      <TableCell align="right">Remove</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {employees.map((row) => (
+                      <TableRow key={row.id}>
+                        <TableCell component="th" scope="row">
+                          {row.email}
+                        </TableCell>
+                        <TableCell align="right">
+                          <IconButton color="inherit">
+                            <DeleteIcon onClick={() => deleteUser(row.id)} />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
               <br />
-              <TextField variant="outlined" required fullWidth label="Employee Email" autoFocus onChange={(event) => setAddEmail(event.target.value)} />
-              <br />
-              <center style={{ marginTop: "30px" }}>
-                <Button style={{ marginRight: "10px" }} variant="contained" color="warning" onClick={() => setShowForm(false)}>Cancel</Button>
-                <Button style={{ marginLeft: "10px" }} variant="contained" color="primary" onClick={() => addEmployee(addEmail, bid, setShowForm)}>Add</Button></center>
-            </>
-            : <center><Button variant="contained" color="primary" onClick={() => setShowForm(true)}>Add Employee</Button></center>
-          }
-
-
-
+              {showForm ?
+                <>
+                  <br />
+                  <TextField variant="outlined" required fullWidth label="Employee Email" autoFocus onChange={(event) => setAddEmail(event.target.value)} />
+                  <br />
+                  <center style={{ marginTop: "30px" }}>
+                    <Button style={{ marginRight: "10px" }} variant="contained" color="warning" onClick={() => setShowForm(false)}>Cancel</Button>
+                    <Button style={{ marginLeft: "10px" }} variant="contained" color="primary" onClick={() => addEmployee(addEmail, bid, setShowForm)}>Add</Button></center>
+                </>
+                : <center><Button variant="contained" color="primary" onClick={() => setShowForm(true)}>Add Employee</Button></center>}
+            </> : <></>}
 
         </Container>
       </main>
