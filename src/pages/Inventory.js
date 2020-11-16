@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 540,
+    height: 740,
   },
 }));
 
@@ -177,7 +177,7 @@ export default function UserProfile() {
           <Grid container spacing={5}>
             {/* Chart */}
             <Grid item xs={12}>
-              <Paper>
+              <Paper className={fixedHeightPaper}>
                 <Items />
               </Paper>
             </Grid>

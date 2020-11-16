@@ -60,7 +60,7 @@ class Items extends React.Component {
             editItem: null
         });
     };
-    //
+    
     render() {
         const mystyle = {
             color: "black",
@@ -68,9 +68,8 @@ class Items extends React.Component {
             padding: "10%",
             fontFamily: "Arial",
             margin: "2%",
-            height: "40%",
             width: "40%"
-          };
+        };
          
         return <>
             <div className="btn" onClick={this.togglePop}>
@@ -78,32 +77,22 @@ class Items extends React.Component {
             </div>
             {this.state.showForm ? <PopUp editItem={this.state.editItem} toggle={this.togglePop} /> : null}
             
-                  <Grid container> {
+            <Grid container> 
+            {
                 this.state.items.map(({ menu_item, pricing, qnty, id }) => (
                     <> 
-                   
-                    <Grid item xs={12}>
-                 <Paper style={mystyle}>
-                  
+                        <Paper style={mystyle}>
                         <p> {menu_item} </p>
                         <p> ${pricing} </p>
                         <p> {qnty} </p>
-                       
-                        
                         <Button variant="contained" color="primary" onClick={() => this.edit(id, menu_item, pricing, qnty)}>Edit</Button>
                         {" "}
-                        <Button variant="contained" color="primary" onClick={() => this.remove(id)}>Delete</Button>
-                    
-                 
-                  </Paper>
-                  </Grid>
-     
-               
+                        <Button variant="contained" color="primary" onClick={() => this.remove(id)}>Delete</Button>  
+                        </Paper>
                     </>
                 ))
-              
-            }
-              </Grid>
+            }  
+            </Grid>
         </>
     }
 }
