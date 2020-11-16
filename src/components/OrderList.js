@@ -4,7 +4,7 @@ import { firestore } from "../firebase/firebase.utils";
 import { UserContext } from "../firebase/auth-provider";
 
 class OrderList extends React.Component {
-  
+
   static contextType = UserContext;
 
   constructor(props) {
@@ -40,7 +40,7 @@ class OrderList extends React.Component {
             date: date.toLocaleString(),
             customer: name,
             summary: summary.join(', '),
-            total: total,
+            total: total.toFixed(2),
           }
 
           return order;
@@ -57,14 +57,12 @@ class OrderList extends React.Component {
     }
 
   columns = [
-    { field: 'id', headerName: 'ID', width: 200 },
-    { field: 'timestamp', headerName: 'Timestamp', width: 150 },
-    { field: 'date', headerName: 'Date', width: 190 },
+    { field: 'date', headerName: 'Date', width: 150 },
     { field: 'customer', headerName: 'Customer', width: 150 },
     {
       field: 'summary',
       headerName: 'Summary',
-      width: 300,
+      width: 750,
     },
     {
       field: 'total',
