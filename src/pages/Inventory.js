@@ -18,8 +18,10 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Items from "../inventoryComponents/Items";
+import { auth } from "../firebase/firebase.utils";
 
 function Copyright() {
   return (
@@ -32,6 +34,10 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+
+const logout = () => {
+  auth.signOut();
 }
 
 const drawerWidth = 240;
@@ -144,9 +150,7 @@ export default function UserProfile() {
             Inventory
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
+            <ExitToAppIcon id="clickTwo" onClick={logout} />
           </IconButton>
         </Toolbar>
       </AppBar>

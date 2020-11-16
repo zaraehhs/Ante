@@ -21,7 +21,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Name from "../userComponents/Name";
 import Credentials from "../userComponents/Credentials";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Contact from "../userComponents/Contact";
+import { auth } from "../firebase/firebase.utils";
 
 function Copyright() {
   return (
@@ -34,6 +36,10 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+
+const logout = () => {
+  auth.signOut();
 }
 
 const drawerWidth = 240;
@@ -146,9 +152,7 @@ export default function UserProfile() {
             Profile
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
+            <ExitToAppIcon id="clickTwo" onClick={logout} />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -172,31 +176,50 @@ export default function UserProfile() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={6}>
-              <Paper className={fixedHeightPaper}>
-                <Name />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={6}>
-              <Paper className={fixedHeightPaper}>
-                <Credentials />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Contact />
-              </Paper>
-            </Grid>
+
+
+        <br/>
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
+          <Grid container item xs={12} spacing={3}>
+            <span>TEST</span>
           </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
+          <Grid container item xs={12} spacing={3}>
+            <span>TEST</span>
+          </Grid>
+        </Grid>
+
         </Container>
       </main>
     </div>
   );
+
+//   <Grid container spacing={3}>
+// {/* Chart */}
+// <Grid item xs={12} md={8} lg={6}>
+//   <Paper className={fixedHeightPaper}>
+//     <Name />
+//   </Paper>
+// </Grid>
+// {/* Recent Deposits */}
+// <Grid item xs={12} md={4} lg={6}>
+//   <Paper className={fixedHeightPaper}>
+//     <Credentials />
+//   </Paper>
+// </Grid>
+// {/* Recent Orders */}
+// <Grid item xs={12}>
+//   <Paper className={classes.paper}>
+//     <Contact />
+//   </Paper>
+// </Grid>
+// </Grid>
+// <Box pt={4}>
+// <Copyright />
+// </Box>
 }
+

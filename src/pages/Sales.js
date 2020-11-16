@@ -18,12 +18,14 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
 import OrderList from '../components/OrderList';
 import { useHistory } from 'react-router-dom';
+import { auth } from "../firebase/firebase.utils";
 
 function Copyright() {
   return (
@@ -36,6 +38,10 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+
+const logout = () => {
+  auth.signOut();
 }
 
 const drawerWidth = 240;
@@ -151,8 +157,8 @@ export default function Sales() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Orders
           </Typography>
-          <IconButton color="" aria-label="add to shopping cart" onClick={routeChange}>
-            <AddShoppingCartIcon />
+          <IconButton color="inherit">
+            <ExitToAppIcon id="clickTwo" onClick={logout} />
           </IconButton>
         </Toolbar>
       </AppBar>

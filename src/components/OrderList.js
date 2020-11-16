@@ -86,7 +86,7 @@ class OrderList extends React.Component {
   render() {
     return (
       <div style={{ height: 750, width: '100%' }}>
-        <DataGrid rows={this.state.rows} columns={this.columns} pageSize={5} checkboxSelection />
+        <DataGrid rows={this.state.rows} columns={this.columns} pageSize={10} checkboxSelection />
       </div>
     );
   }

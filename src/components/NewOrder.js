@@ -28,8 +28,10 @@ import Cart from '../components/Cart';
 import TotalAmount from '../components/TotalAmount';
 import NewOrderStepper from '../components/NewOrderStepper';
 import CustomerInfo from '../components/CustomerInfo';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useHistory } from 'react-router-dom';
 import confirmLogo from '../images/confirm_order.svg';
+import { auth } from "../firebase/firebase.utils";
 
 function Copyright() {
   return (
@@ -45,6 +47,10 @@ function Copyright() {
 }
 
 const drawerWidth = 240;
+
+const logout = () => {
+  auth.signOut();
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -180,8 +186,8 @@ export default function NewOrder(props) {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Checkout
           </Typography>
-          <IconButton id="clickTwo" color="" aria-label="add to shopping cart" onClick={routeChange}>
-            <ShoppingCartIcon />
+          <IconButton color="inherit">
+            <ExitToAppIcon id="clickTwo" onClick={logout} />
           </IconButton>
         </Toolbar>
       </AppBar>
