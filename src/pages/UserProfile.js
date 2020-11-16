@@ -21,7 +21,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Name from "../userComponents/Name";
 import Credentials from "../userComponents/Credentials";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Contact from "../userComponents/Contact";
+import { auth } from "../firebase/firebase.utils";
 
 function Copyright() {
   return (
@@ -34,6 +36,10 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+
+const logout = () => {
+  auth.signOut();
 }
 
 const drawerWidth = 240;
@@ -146,9 +152,7 @@ export default function UserProfile() {
             Profile
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
+            <ExitToAppIcon id="clickTwo" onClick={logout} />
           </IconButton>
         </Toolbar>
       </AppBar>
