@@ -42,9 +42,9 @@ export default function SelectedList(props) {
                   className={classes.inline}
                   color="textPrimary"
                 >
-                  subtotal: ${item.total}
+                ${item.total.toFixed(2)}
                 </Typography>
-                {` = ${item.quantity} x $${item.price}`}
+                {` = ${item.quantity} x $${item.price.toFixed(2)}`}
               </React.Fragment>
             }
           />

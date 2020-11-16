@@ -89,7 +89,8 @@ export default function NewOrderStepper(props) {
   const history = useHistory();
 
   const handleReset = () => {
-    history.push("/orders");
+    window.location.reload();
+    //history.push("/new_order");
   };
 
   return (
@@ -115,7 +116,7 @@ export default function NewOrderStepper(props) {
         {activeStep === steps.length ? (
           <div>
             <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
+              Order placed!
             </Typography>
             <Button onClick={handleReset} className={classes.button}>
               Reset
@@ -135,7 +136,7 @@ export default function NewOrderStepper(props) {
                 onClick={handleNext}
                 className={classes.button}
               >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                {activeStep === steps.length - 1 ? 'Purchase' : 'Next'}
               </Button>
             </div>
           </div>

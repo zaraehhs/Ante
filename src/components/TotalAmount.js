@@ -22,13 +22,10 @@ export default function TotalAmount(props) {
   return (
     <div align="right" className={classes.root}>
       <Typography variant="subtitle1" gutterBottom>
-        Subtotal: ${subtotal}
-      </Typography>
-      <Typography variant="subtitle2" gutterBottom>
-        Sales Tax: ${3}
+        Subtotal: ${subtotal.toFixed(2)}
       </Typography>
       <Typography variant="h5" gutterBottom>
-         Total: ${subtotal + 3}
+         Total: ${subtotal.toFixed(2)}
       </Typography>
     </div>
   );

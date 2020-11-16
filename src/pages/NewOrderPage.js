@@ -46,7 +46,7 @@ class NewOrderPage extends React.Component {
               total: this.state.total,
               timestamp: new Date().getTime(),
             }).then(function (docRef) {
-              alert("Order Placed")
+              //location.reload();
             }).catch(function (error) {
               alert("An error has occured");
             });

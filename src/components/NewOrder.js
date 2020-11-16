@@ -29,13 +29,14 @@ import TotalAmount from '../components/TotalAmount';
 import NewOrderStepper from '../components/NewOrderStepper';
 import CustomerInfo from '../components/CustomerInfo';
 import { useHistory } from 'react-router-dom';
+import confirmLogo from '../images/confirm_order.svg';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="">
+        ANTE
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -152,11 +153,12 @@ export default function NewOrder(props) {
       case 1:
         return (
           <>
-            <CustomerInfo props={props.props} />
+            <center><CustomerInfo props={props.props} /></center>
           </>
         );
       default:
-        return (<></>);
+        return (<><br /><h2>Confirm Purchase</h2><br /><img src={confirmLogo} width="30%" />
+        </>);
     }
   }
 
@@ -176,7 +178,7 @@ export default function NewOrder(props) {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            New Order
+            Checkout
           </Typography>
           <IconButton id="clickTwo" color="" aria-label="add to shopping cart" onClick={routeChange}>
             <ShoppingCartIcon />

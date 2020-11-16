@@ -70,8 +70,8 @@ export default function Cart(props) {
           <GridListTile key={tile.id}>
             <img src={tile.image} alt={tile.name} />
             <GridListTileBar
-              title={tile.name}
-              subtitle={<span>Stock: {tile.quantity} | Price: ${tile.price}</span>}
+              title={tile.name }
+              subtitle={<span>${tile.price.toFixed(2)} | {tile.quantity}</span>}
               actionIcon={
                 <>
                 <IconButton aria-label={`info about ${tile.name}`} className={classes.icon} onClick={tile.add}>
