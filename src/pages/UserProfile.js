@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useReducer } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -34,6 +34,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { firestore } from "../firebase/firebase.utils";
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 function Copyright() {
   return (
@@ -54,6 +56,16 @@ const logout = () => {
 
 const deleteUser = (id) => {
   firestore.collection('employees').doc(id).delete();
+}
+
+const addEmployee = (email, bid, setShowForm) => {
+  setShowForm(false);
+
+  firestore.collection("employees").add({
+    business: bid,
+    email: email
+  }).then(function (docRef) {
+  });
 }
 
 const drawerWidth = 240;
@@ -143,6 +155,9 @@ export default function UserProfile() {
   const bid = useContext(UserContext).business;
   const uid = useContext(UserContext).user;
   const [employees, setEmployees] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [addEmail, setAddEmail] = useState("");
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -165,6 +180,7 @@ export default function UserProfile() {
         }
       });
       setEmployees(list);
+      forceUpdate();
     });
 
   });
@@ -245,7 +261,7 @@ export default function UserProfile() {
                 {employees.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell component="th" scope="row">
-                    {row.email}
+                      {row.email}
                     </TableCell>
                     <TableCell align="right">
                       <IconButton color="inherit">
@@ -257,6 +273,20 @@ export default function UserProfile() {
               </TableBody>
             </Table>
           </TableContainer>
+          <br />
+          {showForm ?
+            <>
+              <br />
+              <TextField variant="outlined" required fullWidth label="Employee Email" autoFocus onChange={(event) => setAddEmail(event.target.value)} />
+              <br />
+              <center style={{ marginTop: "30px" }}>
+                <Button style={{ marginRight: "10px" }} variant="contained" color="warning" onClick={() => setShowForm(false)}>Cancel</Button>
+                <Button style={{ marginLeft: "10px" }} variant="contained" color="primary" onClick={() => addEmployee(addEmail, bid, setShowForm)}>Add</Button></center>
+            </>
+            : <center><Button variant="contained" color="primary" onClick={() => setShowForm(true)}>Add Employee</Button></center>
+          }
+
+
 
 
         </Container>
