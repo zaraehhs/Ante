@@ -18,24 +18,24 @@ export default function Chart() {
     //get month from timestamp
     const unsubscribeFromSnapshot = salesDB.onSnapshot(async snapshot => {
       const monthCounts = {
-        "January": 0,
-        "February": 0,
-        "March": 0,
-        "April": 0,
+        "Jan": 0,
+        "Feb": 0,
+        "Mar": 0,
+        "Apr": 0,
         "May": 0,
         "June": 0,
         "July": 0,
-        "August": 0,
-        "September": 0,
-        "October": 0,
-        "November": 0,
-        "December": 0,
+        "Aug": 0,
+        "Sep": 0,
+        "Oct": 0,
+        "Nov": 0,
+        "Dec": 0,
       };
       snapshot.docs.forEach((doc) => {
         const { timestamp, total } = doc.data();
         const date = new Date(timestamp);
         if (date.getFullYear() === new Date().getFullYear()) {
-          const month = date.toLocaleString('default', { month: 'long' });
+          const month = date.toLocaleString('default', { month: 'short' });
           if (monthCounts[month]) {
             monthCounts[month] = monthCounts[month] + total
           } else {

@@ -57,17 +57,17 @@ class OrderList extends React.Component {
     }
 
   columns = [
-    { field: 'date', headerName: 'Date', width: 150 },
+    { field: 'date', headerName: 'Date', width: 200 },
     {
       field: 'summary',
       headerName: 'Summary',
-      width: 750,
+      width: 640,
     },
     { field: 'customer', headerName: 'Customer', width: 150 },
     {
       field: 'total',
       headerName: 'Total',
-      width: 90,
+      width: 150,
     },
   ];
 
@@ -86,14 +86,17 @@ class OrderList extends React.Component {
   render() {
     return (
       <div style={{ height: 750, width: '100%' }}>
-<<<<<<< HEAD
-        <DataGrid rows={this.state.rows} columns={this.columns} pageSize={10} checkboxSelection />
-=======
-        <DataGrid rows={this.state.rows} columns={this.columns} pageSize={12} checkboxSelection />
->>>>>>> origin/andrew1
+        <DataGrid sortModel={sortModel} rows={this.state.rows} columns={this.columns} pageSize={12} checkboxSelection />
       </div>
     );
   }
 }
+
+const sortModel = [
+  {
+    field: 'date',
+    sort: 'desc',
+  },
+]
 
 export default OrderList;

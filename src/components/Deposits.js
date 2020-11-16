@@ -58,7 +58,7 @@ export default function Deposits() {
     <React.Fragment>
       <Title>Today's Sales</Title>
       <Typography component="p" variant="h4"> $
-        {total}
+        {parseFloat(total).toFixed(2)}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         {days}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,6 +24,16 @@ import Credentials from "../userComponents/Credentials";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Contact from "../userComponents/Contact";
 import { auth } from "../firebase/firebase.utils";
+import profile from '../images/profile.png';
+import { UserContext } from "../firebase/auth-provider";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { firestore } from "../firebase/firebase.utils";
 
 function Copyright() {
   return (
@@ -40,6 +50,10 @@ function Copyright() {
 
 const logout = () => {
   auth.signOut();
+}
+
+const deleteUser = (id) => {
+  firestore.collection('employees').doc(id).delete();
 }
 
 const drawerWidth = 240;
@@ -124,6 +138,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UserProfile() {
+  const name = useContext(UserContext).name;
+  const email = useContext(UserContext).email;
+  const bid = useContext(UserContext).business;
+  const uid = useContext(UserContext).user;
+  const [employees, setEmployees] = useState([]);
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -133,6 +153,22 @@ export default function UserProfile() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  useEffect(() => {
+    const collectionRef = firestore.collection("employees").where("business", "==", bid);
+    collectionRef.onSnapshot(async snapshot => {
+      const list = snapshot.docs.map(doc => {
+        const { email } = doc.data();
+        return {
+          id: doc.id,
+          email: email
+        }
+      });
+      setEmployees(list);
+    });
+
+  });
+
 
   return (
     <div className={classes.root}>
@@ -178,48 +214,78 @@ export default function UserProfile() {
         <Container maxWidth="lg" className={classes.container}>
 
 
-        <br/>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-        >
-          <Grid container item xs={12} spacing={3}>
-            <span>TEST</span>
+          <br />
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            spacing="6"
+          >
+            <Grid item>
+              <span>          <img src={profile} height="200px" /></span>
+            </Grid>
+            <Grid item>
+              <h1>{name}</h1><h3><a href={"mailto:" + email}>{email}</a> - {bid === uid ? "Business Owner" : "Employee"}</h3>
+            </Grid>
           </Grid>
-          <Grid container item xs={12} spacing={3}>
-            <span>TEST</span>
-          </Grid>
-        </Grid>
+
+          <br />
+          <br />
+
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Employee Email</TableCell>
+                  <TableCell align="right">Remove</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {employees.map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                    {row.email}
+                    </TableCell>
+                    <TableCell align="right">
+                      <IconButton color="inherit">
+                        <DeleteIcon onClick={() => deleteUser(row.id)} />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
 
         </Container>
       </main>
     </div>
   );
 
-//   <Grid container spacing={3}>
-// {/* Chart */}
-// <Grid item xs={12} md={8} lg={6}>
-//   <Paper className={fixedHeightPaper}>
-//     <Name />
-//   </Paper>
-// </Grid>
-// {/* Recent Deposits */}
-// <Grid item xs={12} md={4} lg={6}>
-//   <Paper className={fixedHeightPaper}>
-//     <Credentials />
-//   </Paper>
-// </Grid>
-// {/* Recent Orders */}
-// <Grid item xs={12}>
-//   <Paper className={classes.paper}>
-//     <Contact />
-//   </Paper>
-// </Grid>
-// </Grid>
-// <Box pt={4}>
-// <Copyright />
-// </Box>
+  //   <Grid container spacing={3}>
+  // {/* Chart */}
+  // <Grid item xs={12} md={8} lg={6}>
+  //   <Paper className={fixedHeightPaper}>
+  //     <Name />
+  //   </Paper>
+  // </Grid>
+  // {/* Recent Deposits */}
+  // <Grid item xs={12} md={4} lg={6}>
+  //   <Paper className={fixedHeightPaper}>
+  //     <Credentials />
+  //   </Paper>
+  // </Grid>
+  // {/* Recent Orders */}
+  // <Grid item xs={12}>
+  //   <Paper className={classes.paper}>
+  //     <Contact />
+  //   </Paper>
+  // </Grid>
+  // </Grid>
+  // <Box pt={4}>
+  // <Copyright />
+  // </Box>
 }
 
