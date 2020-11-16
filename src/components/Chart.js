@@ -17,15 +17,30 @@ export default function Chart() {
     //Count number of sales per month. 1 entry = 1 sale
     //get month from timestamp
     const unsubscribeFromSnapshot = salesDB.onSnapshot(async snapshot => {
-      const monthCounts = {};
+      const monthCounts = {
+        "January": 0,
+        "February": 0,
+        "March": 0,
+        "April": 0,
+        "May": 0,
+        "June": 0,
+        "July": 0,
+        "August": 0,
+        "September": 0,
+        "October": 0,
+        "November": 0,
+        "December": 0,
+      };
       snapshot.docs.forEach((doc) => {
         const { timestamp, total } = doc.data();
         const date = new Date(timestamp);
-        const month = date.toLocaleString('default', { month: 'long' });
-        if (monthCounts[month]) {
-          monthCounts[month] = monthCounts[month] + total
-        } else {
-          monthCounts[month] = total
+        if (date.getFullYear() === new Date().getFullYear()) {
+          const month = date.toLocaleString('default', { month: 'long' });
+          if (monthCounts[month]) {
+            monthCounts[month] = monthCounts[month] + total
+          } else {
+            monthCounts[month] = total
+          }
         }
       });
       const sales = Object.keys(monthCounts).map((key) => {
@@ -40,7 +55,7 @@ export default function Chart() {
 
   return (
     <React.Fragment>
-      <Title> Average Monthly Sales</Title>
+      <Title> Monthly Sales</Title>
       <ResponsiveContainer>
         <LineChart
           data={salesList}

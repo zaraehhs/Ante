@@ -58,12 +58,12 @@ class OrderList extends React.Component {
 
   columns = [
     { field: 'date', headerName: 'Date', width: 150 },
-    { field: 'customer', headerName: 'Customer', width: 150 },
     {
       field: 'summary',
       headerName: 'Summary',
       width: 750,
     },
+    { field: 'customer', headerName: 'Customer', width: 150 },
     {
       field: 'total',
       headerName: 'Total',
