@@ -14,18 +14,18 @@ export default function Chart() {
   useEffect(() => {
     const salesDB = firestore.collection("sales").where("business", "==", business);
 
-    //Count number of sales per month. 1 entry = 1 sale 
+    //Count number of sales per month. 1 entry = 1 sale
     //get month from timestamp
     const unsubscribeFromSnapshot = salesDB.onSnapshot(async snapshot => {
       const monthCounts = {};
       snapshot.docs.forEach((doc) => {
-        const { timestamp } = doc.data();
+        const { timestamp, total } = doc.data();
         const date = new Date(timestamp);
         const month = date.toLocaleString('default', { month: 'long' });
         if (monthCounts[month]) {
-          monthCounts[month] = monthCounts[month] + 1
+          monthCounts[month] = monthCounts[month] + total
         } else {
-          monthCounts[month] = 1
+          monthCounts[month] = total
         }
       });
       const sales = Object.keys(monthCounts).map((key) => {
