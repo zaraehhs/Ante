@@ -180,7 +180,6 @@ export default function UserProfile() {
         }
       });
       setEmployees(list);
-      forceUpdate();
     });
 
   });
@@ -221,7 +220,7 @@ export default function UserProfile() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{mainListItems(uid === bid)}</List>
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>

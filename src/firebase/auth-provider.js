@@ -24,14 +24,13 @@ class UserProvider extends Component {
 
                 docRef.get().then(function (doc) {
                     if (doc.exists) {
-                        const { admin } = doc.data();
-                        if (admin) {
+                        const { business } = doc.data();
+                        if (!business) {
                             that.setState({ business: userAuth.uid });
                             const business_object = { business: userAuth.uid }
                             window.localStorage.setItem('business', JSON.stringify(business_object));
                         }
                         else {
-                            const { business } = doc.data();
                             that.setState({ business: business });
                             const business_object = { business: business }
                             window.localStorage.setItem('business', JSON.stringify(business_object));

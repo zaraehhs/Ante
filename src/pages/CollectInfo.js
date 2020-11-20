@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,6 +15,7 @@ import BusinessInfo from '../components/BusinessInfo';
 import InventoryInfo from '../components/InventoryInfo';
 import { Redirect } from "react-router-dom";
 import { auth, firestore } from "../firebase/firebase.utils";
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -84,6 +85,35 @@ function getStepContent(step) {
 export default function CollectInfo() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const history = useHistory();
+
+
+  useEffect(() => {
+
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        firestore.collection("employees").where("email", "==", user.email)
+          .get()
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              firestore.collection("users").doc(user.uid).update({
+                admin: false,
+                business: doc.data().business,
+                setup_complete: true
+              }).then(function () {
+                history.push('/dashboard');
+              });
+            });
+          })
+          .catch(function (error) {
+            console.log("Error getting documents: ", error);
+          });
+      }
+    });
+
+  });
+
+
 
   const handleNext = () => {
     if (activeStep + 1 === steps.length) {

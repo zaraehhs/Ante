@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -22,6 +22,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Items from "../inventoryComponents/Items";
 import { auth } from "../firebase/firebase.utils";
+import { UserContext } from "../firebase/auth-provider";
 
 function Copyright() {
   return (
@@ -124,6 +125,8 @@ const useStyles = makeStyles((theme) => ({
 export default function UserProfile() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const bid = useContext(UserContext).business;
+  const uid = useContext(UserContext).user;
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -167,7 +170,7 @@ export default function UserProfile() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{mainListItems(uid === bid)}</List>
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>

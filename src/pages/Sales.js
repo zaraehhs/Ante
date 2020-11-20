@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -26,6 +26,7 @@ import Deposits from '../components/Deposits';
 import OrderList from '../components/OrderList';
 import { useHistory } from 'react-router-dom';
 import { auth } from "../firebase/firebase.utils";
+import { UserContext } from "../firebase/auth-provider";
 
 function Copyright() {
   return (
@@ -127,7 +128,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Sales() {
   const history = useHistory();
-  const routeChange = () =>{
+  const bid = useContext(UserContext).business;
+  const uid = useContext(UserContext).user;
+  const routeChange = () => {
     history.push("/new_order");
   }
   const classes = useStyles();
@@ -175,7 +178,7 @@ export default function Sales() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{mainListItems(uid === bid)}</List>
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>

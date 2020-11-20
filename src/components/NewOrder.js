@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -32,6 +32,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useHistory } from 'react-router-dom';
 import confirmLogo from '../images/confirm_order.svg';
 import { auth } from "../firebase/firebase.utils";
+import { UserContext } from "../firebase/auth-provider";
 
 function Copyright() {
   return (
@@ -132,6 +133,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NewOrder(props) {
+  const bid = useContext(UserContext).business;
+  const uid = useContext(UserContext).user;
   const history = useHistory();
   const routeChange = () => {
     history.push("/orders");
@@ -204,7 +207,7 @@ export default function NewOrder(props) {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{mainListItems(bid === uid)}</List>
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>

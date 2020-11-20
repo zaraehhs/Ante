@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -13,19 +13,30 @@ import Dashboard from '../pages/Dashboard'
 import { Link } from 'react-router-dom';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import ViewListIcon from '@material-ui/icons/ViewList';
+import { UserContext } from "../firebase/auth-provider";
 
 function ListItemLink(props) {
+
   return <ListItem button component="a" {...props} />;
 }
 
-export const mainListItems = (
-  <>
-    <ListItemLink href="/dashboard">
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItemLink>
+
+
+// const business = useContext(UserContext).business;
+// const user = useContext(UserContext).user;
+
+
+
+export function mainListItems(admin) {
+  return (<>
+    {admin ?
+      <ListItemLink href="/dashboard">
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItemLink> : <></>}
+
 
     <ListItemLink href="/new_order">
       <ListItemIcon>
@@ -34,12 +45,12 @@ export const mainListItems = (
       <ListItemText primary="Checkout" />
     </ListItemLink>
 
-    <ListItemLink href="/orders">
+    {admin ? <ListItemLink href="/orders">
       <ListItemIcon>
         <MonetizationOnIcon />
       </ListItemIcon>
       <ListItemText primary="Sales" />
-    </ListItemLink>
+    </ListItemLink> : <></>}
 
     <ListItemLink href="/userprofile">
       <ListItemIcon>
@@ -48,14 +59,55 @@ export const mainListItems = (
       <ListItemText primary="Profile" />
     </ListItemLink>
 
-    <ListItemLink href="/inventory">
+    {admin ? <ListItemLink href="/inventory">
       <ListItemIcon>
         <ViewListIcon />
       </ListItemIcon>
       <ListItemText primary="Inventory" />
-    </ListItemLink>
-  </>
-);
+    </ListItemLink> : <></>}
+  </>);
+}
+
+// export const mainListItems = (
+//   <>
+//     {useContext(UserContext).business === useContext(UserContext).user ?
+//       <ListItemLink href="/dashboard">
+//         <ListItemIcon>
+//           <DashboardIcon />
+//         </ListItemIcon>
+//         <ListItemText primary="Dashboard" />
+//       </ListItemLink> : <></>}
+
+
+//     <ListItemLink href="/new_order">
+//       <ListItemIcon>
+//         <ShoppingCartIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Checkout" />
+//     </ListItemLink>
+
+//     <ListItemLink href="/orders">
+//       <ListItemIcon>
+//         <MonetizationOnIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Sales" />
+//     </ListItemLink>
+
+//     <ListItemLink href="/userprofile">
+//       <ListItemIcon>
+//         <PeopleIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Profile" />
+//     </ListItemLink>
+
+//     <ListItemLink href="/inventory">
+//       <ListItemIcon>
+//         <ViewListIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Inventory" />
+//     </ListItemLink>
+//   </>
+// );
 
 export const secondaryListItems = (
   <div>

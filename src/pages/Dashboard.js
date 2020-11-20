@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,6 +24,7 @@ import Deposits from '../components/Deposits';
 import OrderList from '../components/OrderList';
 import { AlternateEmail } from '@material-ui/icons';
 import { auth } from "../firebase/firebase.utils";
+import { UserContext } from "../firebase/auth-provider";
 
 function Copyright() {
   return (
@@ -120,7 +121,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
-
+  const bid = useContext(UserContext).business;
+  const uid = useContext(UserContext).user;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -172,7 +174,7 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{mainListItems(bid === uid)}</List>
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>
