@@ -60,7 +60,7 @@ class Items extends React.Component {
             editItem: null
         });
     };
-    
+
     render() {
         const mystyle = {
             color: "black",
@@ -70,33 +70,34 @@ class Items extends React.Component {
             margin: "2%",
             width: "40%"
         };
-        
-        const spacestyle = {
-            marginLeft: "6%"
-        }
 
-         
+        // const spacestyle = {
+        //     marginLeft: "6%"
+        // }
+
         return <>
             <div className="btn" onClick={this.togglePop}>
                 <Button id="testME" variant="contained" color="primary">Add Menu Item</Button>
             </div>
             {this.state.showForm ? <PopUp editItem={this.state.editItem} toggle={this.togglePop} /> : null}
-            
-            <Grid container style={spacestyle}> 
-            {
-                this.state.items.map(({ menu_item, pricing, qnty, id }) => (
-                    <> 
-                        <Paper style={mystyle}>
-                        <p> {menu_item} </p>
-                        <p> ${pricing} </p>
-                        <p> {qnty} </p>
-                        <Button variant="contained" color="primary" onClick={() => this.edit(id, menu_item, pricing, qnty)}>Edit</Button>
-                        {" "}
-                        <Button variant="contained" color="primary" onClick={() => this.remove(id)}>Delete</Button>  
-                        </Paper>
-                    </>
-                ))
-            }  
+
+            {/* //style={spacestyle} */}
+            <Grid container justify="center"
+                alignItems="center">
+                {
+                    this.state.items.map(({ menu_item, pricing, qnty, id }) => (
+                        <>
+                            <Paper style={mystyle}>
+                                <p> {menu_item} </p>
+                                <p> ${pricing} </p>
+                                <p> {qnty} </p>
+                                <Button variant="contained" color="primary" onClick={() => this.edit(id, menu_item, pricing, qnty)}>Edit</Button>
+                                {" "}
+                                <Button variant="contained" color="primary" onClick={() => this.remove(id)}>Delete</Button>
+                            </Paper>
+                        </>
+                    ))
+                }
             </Grid>
         </>
     }

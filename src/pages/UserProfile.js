@@ -168,10 +168,11 @@ export default function UserProfile() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  var unsubscribeFromSnapshot;
 
   useEffect(() => {
     const collectionRef = firestore.collection("employees").where("business", "==", bid);
-    collectionRef.onSnapshot(async snapshot => {
+    unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
       const list = snapshot.docs.map(doc => {
         const { email } = doc.data();
         return {
@@ -181,9 +182,10 @@ export default function UserProfile() {
       });
       setEmployees(list);
     });
-
-  });
-
+    return function cleanup() {
+      unsubscribeFromSnapshot();
+    };
+  }, []);
 
   return (
     <div className={classes.root}>
