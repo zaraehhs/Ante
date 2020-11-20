@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import { firestore } from "../firebase/firebase.utils";
 import PopUp from "./PopUp";
 import { UserContext } from "../firebase/auth-provider";
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 class Items extends React.Component {
     constructor(props) {
@@ -58,26 +60,39 @@ class Items extends React.Component {
             editItem: null
         });
     };
-    //
+    
     render() {
+        const mystyle = {
+            color: "black",
+            backgroundImage: 'url(https://www.pngkit.com/png/detail/409-4099024_food-cut-out-png-png-images-food-circle.png)',
+            padding: "10%",
+            fontFamily: "Arial",
+            margin: "2%",
+            width: "40%"
+        };
+         
         return <>
             <div className="btn" onClick={this.togglePop}>
                 <Button id="testME" variant="contained" color="primary">Add Menu Item</Button>
             </div>
             {this.state.showForm ? <PopUp editItem={this.state.editItem} toggle={this.togglePop} /> : null}
+            
+            <Grid container> 
             {
                 this.state.items.map(({ menu_item, pricing, qnty, id }) => (
-                    <>
-                        <span> Item: {menu_item} </span>
-                        <span> Price: {pricing} </span>
-                        <span> Quantity: {qnty} </span>
-                        <Button variant="contained" color="secondary" onClick={() => this.remove(id)}>Delete</Button>
-                &nbsp;&nbsp;&nbsp;
-                        <Button variant="contained" color="secondary" onClick={() => this.edit(id, menu_item, pricing, qnty)}>Edit</Button>
-                &nbsp;&nbsp;&nbsp;
+                    <> 
+                        <Paper style={mystyle}>
+                        <p> {menu_item} </p>
+                        <p> ${pricing} </p>
+                        <p> {qnty} </p>
+                        <Button variant="contained" color="primary" onClick={() => this.edit(id, menu_item, pricing, qnty)}>Edit</Button>
+                        {" "}
+                        <Button variant="contained" color="primary" onClick={() => this.remove(id)}>Delete</Button>  
+                        </Paper>
                     </>
                 ))
-            }
+            }  
+            </Grid>
         </>
     }
 }
