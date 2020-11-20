@@ -64,7 +64,12 @@ const SignInSide = () => {
       docRef.get().then(function (doc) {
         if (doc.exists) {
           if (doc.data().setup_complete) {
-            history.push('/dashboard');
+            if (doc.data().business) {
+              history.push('/new_order');
+            }
+            else {
+              history.push('/dashboard');
+            }
           }
           else {
             history.push('/collectinfo');
