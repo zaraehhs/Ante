@@ -70,6 +70,10 @@ class Items extends React.Component {
             margin: "2%",
             width: "40%"
         };
+
+        const spacestyle = {
+            marginLeft: "6%"
+        }
          
         return <>
             <div className="btn" onClick={this.togglePop}>
@@ -77,7 +81,7 @@ class Items extends React.Component {
             </div>
             {this.state.showForm ? <PopUp editItem={this.state.editItem} toggle={this.togglePop} /> : null}
             
-            <Grid container> 
+            <Grid container style={spacestyle}> 
             {
                 this.state.items.map(({ menu_item, pricing, qnty, id }) => (
                     <> 
